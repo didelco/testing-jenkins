@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:6-alpine' 
-            args '-p 3000:3000' 
+            args '-p 3000:3000 -p 5000:5000' 
         }
     }
     stages {
@@ -11,5 +11,14 @@ pipeline {
                 sh 'npm install && npm run build' 
             }
         }
+        stage('Deliver for development') {
+           
+            steps {
+                sh './jenkins/scripts/deliver-for-development.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
     }
+    
 }
