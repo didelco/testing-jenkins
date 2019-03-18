@@ -6,14 +6,9 @@ pipeline {
         }
     }
     stages {
-        stage('Install') {
-            steps {
-                sh 'npm install' 
-            }
-        }
         stage('Build') {
             steps {
-                sh 'npm build' 
+                sh 'npm install && npm run build' 
             }
         }
     }
