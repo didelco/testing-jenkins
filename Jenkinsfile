@@ -11,7 +11,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install & npm run build'
+                sh 'yarn global add serve'
+                sh 'npm install'
+                sh 'npm run clean'
+                sh 'npm run build'
+            }
+        }
+        stage('Serve') {
+            steps {
+                sh 'serve -s build'
             }
         }
     }
